@@ -8,13 +8,20 @@
 	]
 	
 	const usernameInput = document.getElementsByClassName('usernameInput')[0]
+	const passwordInput = document.getElementsByClassName('passwordInput')[0]
+	const emailInput = document.getElementsByClassName('emailInput')[0]
 	const messagesContainer = document.getElementsByClassName('messages')[0]
 	const inputMessage = document.getElementsByClassName('inputMessage')[0]
 	
+  const registerbtn = document.getElementById('register-btn')
+  const loginbtn = document.getElementById('login-btn')
+
 	const loginPage = document.getElementsByClassName('login page')[0]
 	const chatPage = document.getElementsByClassName('chat page')[0]
 	
 	let username
+  let password
+  let email
 	let isConnected = false
 	let isTyping = false
 	let lastTypingTime
@@ -31,6 +38,33 @@
 		console.log(message)
 	}
 
+
+  const newUser = () => {
+    username = usernameInput.value.trim()
+    email = emailInput.value.trim()
+    password = passwordInput.value.trim()
+
+    const data = {
+      username: username,
+      email: email,
+      password: password
+    }
+
+    socket.emit('newUser', data)
+  }
+
+  const login = () => {
+    email = emailInput.value.trim()
+    password = passwordInput.value.trim()
+
+    const data = {
+      email: email,
+      password: password
+    }
+
+    socket.emit('loginUser', data)
+  }
+
 	const getUsernameColor = (username) => {
 		let hash = 7;
 		for (let i = 0; i < username.length; i++) {
@@ -41,15 +75,12 @@
 		return COLORS[index]
 	  }
 	
-	const setUsername = () => {
-		username = usernameInput.value.trim()
-		
-		if (username) {
+	const setUsername = (name) => {		
+    username = name
+		if (name) {
 			loginPage.classList.add('hidden')
 			chatPage.classList.add('visible')
 			currentInput = inputMessage
-
-			socket.emit('addUser', username)
 		}
 	}
 
@@ -162,18 +193,10 @@
 			? log('1 usuário online')
 			: log(`${data.onlineUsers} usuários online`)
 	
-	window.addEventListener('keydown', event => {
-		if (!(event.ctrlKey || event.metaKey || event.altKey)) {
-			currentInput.focus()
-		}
-		
+	window.addEventListener('keydown', event => {		
 		const isEnterKeyPressed = event.which === 13
 		
 		if (isEnterKeyPressed) {
-			if (!username) {
-				return setUsername()
-			}
-
 			sendMessage()
 			socket.emit('stopTyping')
 			isTyping = false
@@ -182,7 +205,17 @@
 		typing = false
 	})
 
+  registerbtn?.addEventListener('click', () => newUser())
+  loginbtn?.addEventListener('click', () => login())
+
 	inputMessage.addEventListener('input', () => updateTyping())
+
+  socket.on('sucessRegister', () => {
+    console.log('Registrado com sucesso! Por favor realize o login.')
+    window.location.href = 'login.html'
+  })
+
+  socket.on('validUser', username => setUsername(username))
 
 	socket.on('login', data => {
 		isConnected = true
@@ -194,6 +227,7 @@
 	socket.on('newMessage', data => addChatMessage(data))
 
 	socket.on('userJoined', data => {
+    console.log(data);
 		log(data.username + ' entrou')
 		addParticipantsMessage(data)
 	})
