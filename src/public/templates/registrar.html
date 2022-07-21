@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../styles.css">
+  <title>Document</title>
+</head>
+<body>
+	<ul class="pages">
+		<li class="chat page">
+			<div class="chatArea">
+				<ul class="messages"></ul>
+			</div>
+			<input class="inputMessage" placeholder="Escreva sua mensagem..."/>
+		</li>
+		<li class="login page">
+			<div class="form">
+				<h3 class="title">Nome:</h3>
+				<input class="usernameInput" type="text" maxlength="15" />
+				<h3 class="title">E-mail:</h3>
+				<input class="emailInput" type="text" maxlength="15" />
+				<h3 class="title">Senha:</h3>
+				<input class="passwordInput" type="password" maxlength="15" /><br><br>
+        <button id="register-btn" class="btn">Registrar</button>
+			</div>
+		</li>
+	</ul>
+	
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"
+		integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I="
+		crossorigin="anonymous"
+	>
+	</script>
+	<script src="/app.js"></script>
+</body>
+</html>
