@@ -31,6 +31,20 @@ ul {
 	word-wrap: break-word;
 }
 
+.btn{
+  padding: 10px;
+  background-color: #000;
+  color: #fff;
+  border: 1px solid #fff;
+  transition: 0.5s ease;
+  cursor: pointer;
+}
+
+.btn:hover{
+  background-color: #fff;
+  color: #000;
+}
+
 .visible {
 	visibility: visible;
 	opacity: 1;
@@ -65,13 +79,12 @@ ul {
 	height: 100px;
 	margin-top: -100px;
 	position: absolute;
-	
 	text-align: center;
 	top: 50%;
 	width: 100%;
 }
 
-.login.page .form .usernameInput {
+.login.page .form .usernameInput, .passwordInput, .emailInput{
 	background-color: transparent;
 	border: none;
 	border-bottom: 2px solid #fff;
@@ -82,15 +95,15 @@ ul {
 }
 
 .login.page .title {
-	font-size: 200%;
+	font-size: 150%;
 }
 
-.login.page .usernameInput {
-	font-size: 200%;
+.login.page .usernameInput, .passwordInput, .emailInput {
+	font-size: 100%;
 	letter-spacing: 3px;
 }
 
-.login.page .title, .login.page .usernameInput {
+.login.page .title, .login.page .usernameInput, .passwordInput, .emailInput {
 	color: #fff;
 	font-weight: 100;
 }
